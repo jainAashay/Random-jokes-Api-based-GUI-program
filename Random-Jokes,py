@@ -1,0 +1,27 @@
+import requests
+import json
+from tkinter import *
+
+def swap():
+   url = "https://dad-jokes.p.rapidapi.com/random/joke"
+
+   headers = {
+      "X-RapidAPI-Host": "dad-jokes.p.rapidapi.com",
+      "X-RapidAPI-Key": "dbade3bd4bmshdaf00ba7edf622dp109d1djsnec1d5476a9ca"
+   }
+
+   response = requests.request("GET", url, headers=headers)
+   response_dict = json.loads(response.text)
+   s=response_dict["body"][0]["setup"]
+   t=response_dict["body"][0]["punchline"]
+   Joke.delete("1.0", "end")
+   Joke.insert("1.0",f"{s}\n\n{t}")
+
+root = Tk()
+root.title("Enjoy Laughing Jokes !!!!!!")
+root.geometry("765x450")
+
+Joke = Text(root,height=8,width=50,bg="yellow",fg="red",font="ariel 25 bold")
+Joke.pack( fill="x")
+Button(root,text="Another Joke?",font="ariel 15 bold", bg="black", fg="green2", bd=3,command=swap).place(x=325,y=350)
+root.mainloop()
